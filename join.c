@@ -34,16 +34,4 @@ char * path_join(char *dest, const char *path1, const char *path2) {
     return dest;
 }
 
-/*int main() {
-    char *path1 = "/home/adam";
-    char *path2 = "/other/documents/";
-    int dest_len = strlen(path1) + strlen(path2) + 1;
-    char dest[dest_len];
-    dest[dest_len - 1] = '\0';
-    char *arr = path_join(dest, path1, path2);
-    if (arr) {
-        printf("%s\n", dest);
-    } else {
-        printf("error\n");
-    }
-}*/
+
