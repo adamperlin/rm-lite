@@ -15,7 +15,7 @@ const char *trash_dir_root = ".trash";
 
 void exec_remove(struct arguments *args) {
 	if (args == NULL) return;
-	printf("creating trash dir\n");
+	//printf("creating trash dir\n");
 	char *trash_dir_root = create_trash_dir();
 
     for (int i = 0; i < args->n_files; i++) {
@@ -24,10 +24,8 @@ void exec_remove(struct arguments *args) {
                 fprintf(stderr, "Error: must use '-r' Option with directories");
                 exit(-1);
             }
-			printf("RECURSIVE REMOVING FILE %s\n", args->filenames[i]);
             recursive_remove_file(args->filenames[i], trash_dir_root);
         } else {
-			printf("SINGLE REMOVING FILE %s\n", args->filenames[i]);
             single_remove_file(args->filenames[i], trash_dir_root);
         }
     }
@@ -44,15 +42,14 @@ int single_remove_file(const char *pname, const char *trash_dir_root) {
         return file_copy(pname, (const char *) new_path);
     }
 
-    printf("renaming file");
+//    printf("renaming file");
     int errno;
-	   printf("Old path: %s, New Path: %s\n", pname, new_path);
     if ((errno = rename(pname, (const char *) new_path)) < 0) {
         fprintf(stderr, "syscall rename return errno %d\n", errno);
         return 0;
     }
 
-    printf("Returning 1!"); 
+ //   printf("Returning 1!"); 
     return 1;
 }
 
@@ -81,7 +78,6 @@ char *create_trash_dir() {
 }
 
 int recursive_remove_file(char *dir, const char *trash_dir_root) {
-	printf("Recursive remove\n");
 	DIR *dirp = opendir(dir);
 	struct dirent *dp;
 
@@ -90,29 +86,26 @@ int recursive_remove_file(char *dir, const char *trash_dir_root) {
 	char full_new_path[full_new_path_len];
 	full_new_path[full_new_path_len - 1] = '\0';
 	path_join(full_new_path, trash_dir_root, dir);
-	printf("Full new path: %s\n", full_new_path);
-
-
-
+	
 	struct stat st; 
 	if (stat(dir, &st) < 0) {
 		return 0;
 	} 
 
-	printf("Creating new directory\n");
+//	printf("Creating new directory\n");
 	mkdir(full_new_path, st.st_mode & 0700);
 
 	while((dp = readdir(dirp))) {
-		printf("in loop");
+//		printf("in loop");
 		char *fname = dp->d_name;
-		if (fname != NULL) printf("current file: %s\n", fname);
+//		if (fname != NULL) printf("current file: %s\n", fname);
 		if (fname != NULL && !is_special_dir(fname)) {
 			int len = dirname_len + strlen(fname) + 2; 
 			char temp_name[len];
 			temp_name[len - 1] = '\0';
 			path_join(temp_name, dir, fname);
 			
-			printf("File to remove path is: %s\n", temp_name); 
+//			printf("File to remove path is: %s\n", temp_name); 
 			if (is_dir(temp_name)) {
 				recursive_remove_file(temp_name, trash_dir_root);
 			} else {

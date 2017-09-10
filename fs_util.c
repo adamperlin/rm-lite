@@ -33,7 +33,7 @@ int file_copy (const char *i_path, const char *o_path) {
     int out_fd;
 
     struct stat st;
-	printf("input path is: %s\n", i_path);
+	//printf("input path is: %s\n", i_path);
     if (stat(i_path, &st) < 0) {
         return 0;
     }

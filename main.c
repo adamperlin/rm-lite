@@ -16,5 +16,6 @@ int main(int argc, char **argv) {
 
 	exec_remove(&args);
 	command_arguments_clean(&args);
+
 	return 0; 
 }

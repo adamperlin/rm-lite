@@ -30,7 +30,7 @@ void arg_state_add_filename(struct arguments *s, char *filename) {
         s->filenames = realloc(s->filenames, sizeof(char*) * s->n_files);
     }
     s->filenames[s->n_files - 1] = filename;
-    printf("%d\n", s->n_files);
+//    printf("%d\n", s->n_files);
 }
 
 static error_t parse_option(int key, char *arg, struct argp_state *state) {
@@ -38,7 +38,7 @@ static error_t parse_option(int key, char *arg, struct argp_state *state) {
 
     switch (key) {
         case 'r':
-            printf("no_filenames is %d\n", args->n_files);
+ //           printf("no_filenames is %d\n", args->n_files);
             if (args->rec) {
                 argp_usage(state);
                 parse_error_state = true;
@@ -67,7 +67,7 @@ static error_t parse_option(int key, char *arg, struct argp_state *state) {
             args->force = true;
             break;
         case ARGP_KEY_ARG:
-            printf("found key arg\n");
+  //          printf("found key arg\n");
             //if we've already parsed more than five arguments, or we already have a filename...
             arg_state_add_filename(args, arg); //only non option argument is a filename
             break;
@@ -101,7 +101,7 @@ static struct argp argp = {options, parse_option, args_doc, doc};
 
 
     argp_parse(&argp, argc, argv, 0, 0, args);
-	printf("PARSE ERROR STATE: %d\n", parse_error_state);
+//	printf("PARSE ERROR STATE: %d\n", parse_error_state);
     return !parse_error_state;
 }
 
